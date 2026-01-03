@@ -1,33 +1,23 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Tarefas GoF</title>
-    <style>
-        body { font-family: sans-serif; max-width: 600px; margin: 40px auto; }
-        .form { display: flex; gap: 10px; margin-bottom: 20px; }
-        .tarefa-card { 
-            border: 1px solid #ddd; padding: 10px; margin-bottom: 5px;
-            display: flex; justify-content: space-between; align-items: center;
-            border-radius: 4px;
-        }
-        .status-Feita { background-color: #d4edda; color: #155724; }
-        .status-Fazendo { border-left: 5px solid #007bff; }
-    </style>
+    <title>Lista de Tarefas</title>
 </head>
 <body>
-
-    <h2>App Lista de Tarefas</h2>
+    <h1>Lista de Tarefas</h1>
     
-    <div class="form">
-        <input type="text" id="inputNome" placeholder="Tarefa">
-        <input type="text" id="inputDesc" placeholder="Descrição">
-        <button onclick="adicionarPelaUi()">Adicionar</button>
-    </div>
+    <input type="text" id="nome" placeholder="Tarefa">
+    <input type="text" id="desc" placeholder="Descrição">
+    <select id="status">
+        <option value="Disponível">Disponível</option>
+        <option value="Fazendo">Fazendo</option>
+        <option value="Feita">Feita</option>
+    </select>
+    <button onclick="App.cadastrar()">Adicionar</button>
 
-    <div id="listaTarefas"></div>
+    <div id="lista"></div>
 
-    <script src="logic.js"></script>
-    <script src="ui.js"></script>
+    <script src="tarefas.js"></script>
 </body>
 </html>
