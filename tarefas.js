@@ -1,9 +1,11 @@
+// PADRÃO STRATEGY: Define o comportamento/estilo baseado no status
 const StatusStrategy = {
-    "Disponível": { cor: "gray" },
-    "Fazendo": { cor: "blue" },
-    "Feita": { cor: "green" }
+    "Disponível": { cor: "#6c757d", label: "Pendente" },
+    "Fazendo": { cor: "#007bff", label: "Em Andamento" },
+    "Feita": { cor: "#28a745", label: "Concluída" }
 };
 
+// PADRÃO SINGLETON: Garante apenas uma instância do gerenciador de dados
 const GerenciadorDados = (function() {
     let instancia;
 
@@ -35,30 +37,44 @@ const App = {
     render: function() {
         const container = document.getElementById('lista');
         const tarefas = GerenciadorDados.getInstancia().getDados();
-        container.innerHTML = '';
-
-        tarefas.forEach(t => {
+        
+        // Uso de map para criar o HTML de forma mais limpa
+        container.innerHTML = tarefas.map(t => {
             const config = StatusStrategy[t.status];
-            container.innerHTML += `
-                <div style="border-bottom: 1px solid #ccc; padding: 5px;">
-                    <b style="color: ${config.cor}">${t.nome}</b> - ${t.desc} [${t.status}]
+            return `
+                <div class="tarefa-item" style="border-left-color: ${config.cor}">
+                    <strong style="color: ${config.cor}">${t.nome}</strong> 
+                    <p style="margin: 5px 0;">${t.desc}</p>
+                    <small>Status: <b>${config.label}</b></small>
                 </div>
             `;
-        });
+        }).join('');
     },
 
     cadastrar: function() {
-        const nome = document.getElementById('nome').value;
-        const desc = document.getElementById('desc').value;
-        const status = document.getElementById('status').value;
+        const inputNome = document.getElementById('nome');
+        const inputDesc = document.getElementById('desc');
+        const inputStatus = document.getElementById('status');
 
-        if (nome) {
-            GerenciadorDados.getInstancia().salvar({ nome, desc, status });
-            this.render();
-            document.getElementById('nome').value = '';
-            document.getElementById('desc').value = '';
+        if (inputNome.value.trim() === '') {
+            alert("Digite o nome da tarefa!");
+            return;
         }
+
+        const novaTarefa = { 
+            nome: inputNome.value, 
+            desc: inputDesc.value, 
+            status: inputStatus.value 
+        };
+
+        GerenciadorDados.getInstancia().salvar(novaTarefa);
+        this.render();
+
+        // Limpa os campos
+        inputNome.value = '';
+        inputDesc.value = '';
     }
 };
 
+// Inicialização
 window.onload = () => App.render();
