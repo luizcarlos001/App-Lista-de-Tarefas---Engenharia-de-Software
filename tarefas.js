@@ -21,6 +21,11 @@ const GerenciadorDados = (function() {
                 const tarefas = this.getDados();
                 tarefas.push(tarefa);
                 localStorage.setItem(KEY, JSON.stringify(tarefas));
+            },
+            remover: function(index) {
+                const tarefas = this.getDados();
+                tarefas.splice(index, 1);
+                localStorage.setItem(KEY, JSON.stringify(tarefas));
             }
         };
     }
