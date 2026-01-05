@@ -26,7 +26,13 @@ const GerenciadorDados = (function() {
                 const tarefas = this.getDados();
                 tarefas.splice(index, 1);
                 localStorage.setItem(KEY, JSON.stringify(tarefas));
+            },
+            atualizarStatus: function(index, novoStatus) {
+                const tarefas = this.getDados();
+                tarefas[index].status = novoStatus;
+                localStorage.setItem(KEY, JSON.stringify(tarefas));
             }
+
         };
     }
 
